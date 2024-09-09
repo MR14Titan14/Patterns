@@ -71,6 +71,16 @@ class Student {
         name=_name
         fathername=_fathername
     }
+    constructor(_id:Int=-1,_lastname:String,_name:String,_fathername:String,_phone:String?=null,_mail:String?=null,_git:String?="")
+    {
+        id=_id
+        lastname=_lastname
+        name=_name
+        fathername=_fathername
+        phone=_phone
+        mail=_mail
+        git=_git
+    }
 
     fun write()
     {
