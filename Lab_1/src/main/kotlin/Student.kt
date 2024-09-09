@@ -71,4 +71,13 @@ class Student {
         name=_name
         fathername=_fathername
     }
+
+    fun write()
+    {
+        var out = "ID: $id, Фамиля: $lastname, Имя: $name, Отчество: $fathername"
+        if(phone!=null)out+=", Телефон: $phone"
+        if(mail!=null)out+=", Почта: $mail"
+        if(git!=null)out+=", Гит: $git"
+        println(out)
+    }
 }

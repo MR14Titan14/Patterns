@@ -1,7 +1,12 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
-
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+import Student
+class Main {
+    fun main()
+    {
+        val petya = Student("Vetkov","Petr","Govnokodov")
+        val vika = Student("Shelestak","Vika","Lepyohovna")
+        petya.write()
+        vika.write()
+    }
 }
+
+fun main() = Main().main()
