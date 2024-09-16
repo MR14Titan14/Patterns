@@ -12,7 +12,14 @@ class Student {
     var lastname: String =""
         set(value)
         {
+            if(validateNames(value))
+            {
                 field=value
+            }
+            else
+            {
+                field=""
+            }
         }
         get()
         {
@@ -21,7 +28,14 @@ class Student {
     var name: String =""
         set(value)
         {
-            field=value
+            if(validateNames(value))
+            {
+                field=value
+            }
+            else
+            {
+                field=""
+            }
         }
         get()
         {
@@ -30,7 +44,14 @@ class Student {
     var fathername: String =""
         set(value)
         {
-            field=value
+            if(validateNames(value))
+            {
+                field=value
+            }
+            else
+            {
+                field=""
+            }
         }
         get()
         {
@@ -51,7 +72,10 @@ class Student {
     var telegram: String? =null
         set(value)
         {
-            field=value
+            if(validateTelegram(value))
+            {
+                field=value
+            }
         }
         get()
         {
@@ -61,7 +85,10 @@ class Student {
     var mail: String? =null
         set(value)
         {
-            field=value
+            if(validateMail(value))
+            {
+                field=value
+            }
         }
         get()
         {
@@ -71,7 +98,10 @@ class Student {
     var git: String? =null
         set(value)
         {
-            field=value
+            if(validateGit(value))
+            {
+                field=value
+            }
         }
         get()
         {
@@ -85,6 +115,24 @@ class Student {
         fun validatePhone(value:String?): Boolean
         {
             return value?.matches(Regex("""\+?\d{11}""")) ?: true
+        }
+
+        fun validateNames(value:String): Boolean
+        {
+            return value.matches(Regex("""[A-Я]{1}[a-я]*"""))
+        }
+
+        fun validateTelegram(value:String?): Boolean
+        {
+            return value?.matches(Regex("""\@{1}.*""")) ?: true
+        }
+        fun validateMail(value:String?): Boolean
+        {
+            return value?.matches(Regex("""\w*\@\w*\.\w*""")) ?: true
+        }
+        fun validateGit(value:String?): Boolean
+        {
+            return value?.matches(Regex("""https://github.com/.*""")) ?: true
         }
     }
 
@@ -129,7 +177,7 @@ class Student {
     {
         var out = "ID: $id, Фамиля: $lastname, Имя: $name, Отчество: $fathername"
         if(phone!=null)out+=", Телефон: $phone"
-        if(telegram!=null)out+=", Телеграм: $phone"
+        if(telegram!=null)out+=", Телеграм: $telegram"
         if(mail!=null)out+=", Почта: $mail"
         if(git!=null)out+=", Гит: $git"
         return out
