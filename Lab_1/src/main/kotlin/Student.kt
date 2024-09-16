@@ -151,6 +151,22 @@ class Student {
         return this.phone!=null || this.telegram!=null || this.mail!=null
     }
 
+    fun setContacts(_phone: String?=null,_telegram: String?=null,_mail: String?=null)
+    {
+        if(_phone!=null&&validatePhone(_phone))
+        {
+            phone = _phone
+        }
+        if(_telegram!=null&&validateTelegram(_telegram))
+        {
+            telegram = _telegram
+        }
+        if(_mail!=null&&validateMail(_mail))
+        {
+            mail = _mail
+        }
+    }
+
     init
     {
         ids++

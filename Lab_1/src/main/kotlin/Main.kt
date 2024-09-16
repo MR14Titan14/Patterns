@@ -7,6 +7,8 @@ class Main {
         println(petya.toString())
         println(vika.toString())
         println(vika.validate())
+        vika.setContacts("89999999999","asdzxc","mail@yandex.ru")
+        println(vika.toString())
     }
 }
 
