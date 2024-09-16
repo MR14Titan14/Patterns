@@ -39,7 +39,9 @@ class Student {
     var phone: String? =null
         set(value)
         {
-            field=value
+            if(validatePhone(value)) {
+                field = value
+            }
         }
         get()
         {
@@ -79,6 +81,11 @@ class Student {
     companion object
     {
         var ids=0
+
+        fun validatePhone(value:String?): Boolean
+        {
+            return value?.matches(Regex("""\+?\d{11}""")) ?: true
+        }
     }
 
     init
@@ -118,13 +125,13 @@ class Student {
 
     }
 
-    fun write()
+    override fun toString() : String
     {
         var out = "ID: $id, Фамиля: $lastname, Имя: $name, Отчество: $fathername"
         if(phone!=null)out+=", Телефон: $phone"
         if(telegram!=null)out+=", Телеграм: $phone"
         if(mail!=null)out+=", Почта: $mail"
         if(git!=null)out+=", Гит: $git"
-        println(out)
+        return out
     }
 }
