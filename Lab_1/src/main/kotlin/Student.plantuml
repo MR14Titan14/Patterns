@@ -1,0 +1,35 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Companion {
+  + validateGit(String?): Boolean
+  - validateMail(String): Boolean
+  - validatePhone(String): Boolean
+  - validateTelegram(String): Boolean
+  - validateNames(String): Boolean
+   ids: Int
+}
+class Student {
+  + Student(String, String, String): 
+  + Student(String, String, String, String?, String?, String?, String?): 
+  + Student(HashMap<String, Object>): 
+  + toString(): String
+  - hasGit(): Boolean
+  + setContacts(String?, String?, String?): Unit
+  - hasContact(): Boolean
+  + validate(): Boolean
+   name: String
+   git: String?
+   phone: String?
+   lastname: String
+   fathername: String
+   mail: String?
+   telegram: String?
+   id: Int
+}
+
+Companion  +-[#820000,plain]-  Student   
+@enduml
