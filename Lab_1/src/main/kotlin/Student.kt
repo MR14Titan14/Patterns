@@ -46,6 +46,16 @@ class Student {
             return field
         }
 
+    var telegram: String? =null
+        set(value)
+        {
+            field=value
+        }
+        get()
+        {
+            return field
+        }
+
     var mail: String? =null
         set(value)
         {
@@ -65,27 +75,54 @@ class Student {
         {
             return field
         }
+
+    companion object
+    {
+        var ids=0
+    }
+
+    init
+    {
+        ids++
+    }
+
     constructor(_lastname:String,_name:String,_fathername:String)
     {
+        id=ids
         lastname=_lastname
         name=_name
         fathername=_fathername
     }
-    constructor(_id:Int=-1,_lastname:String,_name:String,_fathername:String,_phone:String?=null,_mail:String?=null,_git:String?="")
+    constructor(_lastname:String,_name:String,_fathername:String,_phone:String?=null,_telegram:String?=null,_mail:String?=null,_git:String?=null)
     {
-        id=_id
+        id=ids
         lastname=_lastname
         name=_name
         fathername=_fathername
         phone=_phone
+        telegram=_telegram
         mail=_mail
         git=_git
+    }
+
+    constructor(hashStud: HashMap<String,Any?>)
+    {
+        id=ids
+        lastname=hashStud["lastname"].toString()
+        name=hashStud["name"].toString()
+        fathername=hashStud["fathername"].toString()
+        phone=hashStud.getOrDefault("phone",null).toString()
+        telegram=hashStud.getOrDefault("telegram",null).toString()
+        mail=hashStud.getOrDefault("mail",null).toString()
+        git=hashStud.getOrDefault("git",null).toString()
+
     }
 
     fun write()
     {
         var out = "ID: $id, Фамиля: $lastname, Имя: $name, Отчество: $fathername"
         if(phone!=null)out+=", Телефон: $phone"
+        if(telegram!=null)out+=", Телеграм: $phone"
         if(mail!=null)out+=", Почта: $mail"
         if(git!=null)out+=", Гит: $git"
         println(out)
