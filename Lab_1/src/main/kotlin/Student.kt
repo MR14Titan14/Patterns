@@ -112,21 +112,21 @@ class Student {
     {
         var ids=0
 
-        fun validatePhone(value:String?): Boolean
+        private fun validatePhone(value:String?): Boolean
         {
             return value?.matches(Regex("""\+?\d{11}""")) ?: true
         }
 
-        fun validateNames(value:String): Boolean
+        private fun validateNames(value:String): Boolean
         {
             return value.matches(Regex("""[A-Я]{1}[a-я]*"""))
         }
 
-        fun validateTelegram(value:String?): Boolean
+        private fun validateTelegram(value:String?): Boolean
         {
             return value?.matches(Regex("""\@{1}.*""")) ?: true
         }
-        fun validateMail(value:String?): Boolean
+        private fun validateMail(value:String?): Boolean
         {
             return value?.matches(Regex("""\w*\@\w*\.\w*""")) ?: true
         }
@@ -134,6 +134,21 @@ class Student {
         {
             return value?.matches(Regex("""https://github.com/.*""")) ?: true
         }
+    }
+
+    fun validate() : Boolean
+    {
+        return this.hasGit()&&this.hasContact()
+    }
+
+    private fun hasGit() : Boolean
+    {
+          return this.git!=null
+    }
+
+    private fun hasContact() : Boolean
+    {
+        return this.phone!=null || this.telegram!=null || this.mail!=null
     }
 
     init

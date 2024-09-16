@@ -6,6 +6,7 @@ class Main {
         val vika = Student("Shelestak","Vika","Lepyohovna", "+79999999999","@asba_XXX15","mailexample@gmail.com","https://github.com/Vilieba")
         println(petya.toString())
         println(vika.toString())
+        println(vika.validate())
     }
 }
 
