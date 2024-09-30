@@ -204,6 +204,11 @@ class Student {
 
     }
 
+    constructor(input:String): this (input.split(" ")[0],input.split(" ")[1],input.split(" ")[2])
+    {
+
+    }
+
     override fun toString() : String
     {
         var out = "ID: $id, Фамиля: $lastname, Имя: $name, Отчество: $fathername"
