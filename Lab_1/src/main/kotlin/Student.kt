@@ -1,14 +1,4 @@
-class Student {
-    var id: Int =-1
-        set(value)
-        {
-            if(value>0)
-                field=value
-        }
-        get()
-        {
-            return field
-        }
+class Student : StudentSuper {
     var lastname: String =""
         set(value)
         {
@@ -108,34 +98,6 @@ class Student {
             return field
         }
 
-    companion object
-    {
-        var ids=0
-
-        private fun validatePhone(value:String?): Boolean
-        {
-            return value?.matches(Regex("""\+?\d{11}""")) ?: true
-        }
-
-        private fun validateNames(value:String): Boolean
-        {
-            return value.matches(Regex("""[A-Я]{1}[a-я]*"""))
-        }
-
-        private fun validateTelegram(value:String?): Boolean
-        {
-            return value?.matches(Regex("""\@{1}.*""")) ?: true
-        }
-        private fun validateMail(value:String?): Boolean
-        {
-            return value?.matches(Regex("""\w*\@\w*\.\w*""")) ?: true
-        }
-        fun validateGit(value:String?): Boolean
-        {
-            return value?.matches(Regex("""https://github.com/.*""")) ?: true
-        }
-    }
-
     fun validate() : Boolean
     {
         return this.hasGit()&&this.hasContact()
@@ -202,11 +164,6 @@ class Student {
             return "Телефон: "+phone
         }
         return ""
-    }
-
-    init
-    {
-        ids++
     }
 
     constructor(_lastname:String,_name:String,_fathername:String)
