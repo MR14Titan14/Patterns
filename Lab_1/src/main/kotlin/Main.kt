@@ -27,6 +27,7 @@ class Main {
         {
             println(stud)
         }
+        Student.writeToTxt("output.txt",studList)
     }
 }
 
