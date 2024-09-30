@@ -9,25 +9,30 @@ class Main {
         println(vika.validate())
         vika.setContacts("89999999999","wrongtelegram","mail@yandex.ru")
         println(vika.toString())
-        var igorInp= hashMapOf<String,Any?>(
-            "lastname" to "Igorko",
-            "name" to "Igor",
-            "fathername" to "Igorevich"
-        )
-        var igor=Student(igorInp)
-        println(igor.toString())
+//        var igorInp= hashMapOf<String,Any?>(
+//            "lastname" to "Igorko",
+//            "name" to "Igor",
+//            "fathername" to "Igorevich"
+//        )
+//        var igor=Student(igorInp)
+//        println(igor.toString())
+//
+//        var danila=Student("Daniil Danilanin Danilavich")
+//        println(danila.toString())
+//        println(vika.getInfo())
+//        var vik=StudentShort(vika)
+//        println(vik.toString())
+//        var studList= Student.readFromTxt("input.txt")
+//        for (stud in studList)
+//        {
+//            println(stud)
+//        }
+//        Student.writeToTxt("output.txt",studList)
 
-        var danila=Student("Daniil Danilanin Danilavich")
-        println(danila.toString())
-        println(vika.getInfo())
-        var vik=StudentShort(vika)
-        println(vik.toString())
-        var studList= Student.readFromTxt("input.txt")
-        for (stud in studList)
-        {
-            println(stud)
-        }
-        Student.writeToTxt("output.txt",studList)
+        var dtt=DataTable(arrayOf(arrayOf(1,2,3), arrayOf(4,5,6),arrayOf("a","b",3)))
+        println(dtt.getElement(2,2))
+        println(dtt.getRows())
+        println(dtt.getColumns())
     }
 }
 
