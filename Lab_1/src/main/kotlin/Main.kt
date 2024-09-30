@@ -20,6 +20,8 @@ class Main {
         var danila=Student("Daniil Danilanin Danilavich")
         println(danila.toString())
         println(vika.getInfo())
+        var vik=StudentShort(vika)
+        println(vik.toString())
     }
 }
 
