@@ -167,6 +167,43 @@ class Student {
         }
     }
 
+    fun getInfo() : String
+    {
+        var res ="ФИО: "+getShortName()
+        if(hasGit())
+        {
+            res+= " Гит: "+git
+        }
+        if(hasContact())
+        {
+            res+=" "+getContact()
+        }
+        return res
+    }
+
+    fun getShortName(): String
+    {
+        var res=lastname+" "+name[0]+"."+fathername[0]+". "
+        return res
+    }
+
+    fun getContact(): String
+    {
+        if(mail!=null)
+        {
+            return "Почта: "+mail
+        }
+        if(telegram!=null)
+        {
+            return "Телеграм: "+telegram
+        }
+        if(phone!=null)
+        {
+            return "Телефон: "+phone
+        }
+        return ""
+    }
+
     init
     {
         ids++

@@ -7,8 +7,19 @@ class Main {
         println(petya.toString())
         println(vika.toString())
         println(vika.validate())
-        vika.setContacts("89999999999","asdzxc","mail@yandex.ru")
+        vika.setContacts("89999999999","wrongtelegram","mail@yandex.ru")
         println(vika.toString())
+        var igorInp= hashMapOf<String,Any?>(
+            "lastname" to "Igorko",
+            "name" to "Igor",
+            "fathername" to "Igorevich"
+        )
+        var igor=Student(igorInp)
+        println(igor.toString())
+
+        var danila=Student("Daniil Danilanin Danilavich")
+        println(danila.toString())
+        println(vika.getInfo())
     }
 }
 
