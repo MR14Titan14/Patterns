@@ -22,6 +22,11 @@ class Main {
         println(vika.getInfo())
         var vik=StudentShort(vika)
         println(vik.toString())
+        var studList= Student.readFromTxt("input.txt")
+        for (stud in studList)
+        {
+            println(stud)
+        }
     }
 }
 

@@ -1,3 +1,7 @@
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+
 class Student : StudentSuper {
     var lastname: String =""
         set(value)
@@ -164,6 +168,29 @@ class Student : StudentSuper {
             return "Телефон: "+phone
         }
         return ""
+    }
+
+    companion object
+    {
+        fun readFromTxt(path:String): MutableList<Student>
+        {
+            val file = File(path)
+            var res = mutableListOf<Student>()
+            var text:List<String> = listOf()
+            try {
+                text = file.readLines()
+                println(text)
+            } catch (e: FileNotFoundException) {
+                println("File not found")
+            } catch (e: IOException) {
+                println("Error reading file")
+            }
+            for (line in text)
+            {
+                res.add(Student(line))
+            }
+            return res
+        }
     }
 
     constructor(_lastname:String,_name:String,_fathername:String)
