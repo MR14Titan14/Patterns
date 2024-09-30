@@ -204,7 +204,7 @@ class Student {
 
     }
 
-    constructor(input:String): this (input.split(" ")[0],input.split(" ")[1],input.split(" ")[2])
+    constructor(input:String): this (input.split(" ")[0],input.split(" ")[1],input.split(" ")[2],input.split(" ").getOrNull(3),input.split(" ").getOrNull(4),input.split(" ").getOrNull(5),input.split(" ").getOrNull(6))
     {
 
     }
