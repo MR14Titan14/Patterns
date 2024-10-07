@@ -89,19 +89,6 @@ class Student : StudentSuper {
             return field
         }
 
-    var git: String? =null
-        set(value)
-        {
-            if(validateGit(value))
-            {
-                field=value
-            }
-        }
-        get()
-        {
-            return field
-        }
-
     fun validate() : Boolean
     {
         return this.hasGit()&&this.hasContact()

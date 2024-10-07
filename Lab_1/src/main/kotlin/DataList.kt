@@ -1,6 +1,4 @@
-import java.lang.reflect.Field
-
-class DataList(val data: List<Any?>) {
+open class DataList<T>(val data: List<T>) {
     private var selected : MutableList<Int> = mutableListOf()
 
     fun select(ind:Int)
@@ -16,22 +14,21 @@ class DataList(val data: List<Any?>) {
         return selected
     }
 
-    fun getNames(id:Int):Array<String>
+    open fun getNames():Array<String>
     {
-        var res=data[id]!!::class.java.declaredFields.map { it.name }.toTypedArray()
-        res[0]=id.toString()
-        return res
+        return arrayOf("Abstract","method")
     }
 
-    fun getData():DataTable
+    open fun getDataOfRows():MutableList<MutableList<Any?>>
     {
-        var args= mutableListOf<List<Any?>>()
-        for (id in selected)
-        {
-            var arg= mutableListOf<Any?>(id)
-            arg.add(data[id]!!::class.java.declaredFields.map{it}.toList())
-            args.add(arg)
-        }
+        return mutableListOf(mutableListOf<Any?>("Abstract","method",123))
+    }
+
+    fun getTable():DataTable
+    {
+        var names=getNames()
+        var args=getDataOfRows()
+        args[0]=names.toMutableList()
         return DataTable(args)
     }
 }

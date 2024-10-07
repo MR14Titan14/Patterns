@@ -9,6 +9,18 @@ open class StudentSuper {
         {
             return field
         }
+    var git: String? = null
+        set(value)
+        {
+            if(validateGit(value))
+            {
+                field=value
+            }
+        }
+        get()
+        {
+            return field
+        }
     companion object
     {
         var ids = 0

@@ -1,5 +1,5 @@
 class StudentShort : StudentSuper {
-    private var fio: String? = null
+    var fio: String? = null
         set(value)
         {
             field=value
@@ -8,16 +8,7 @@ class StudentShort : StudentSuper {
         {
             return field
         }
-    private var git: String? = null
-        set(value)
-        {
-            field=value
-        }
-        get()
-        {
-            return field
-        }
-    private var contact: String? = null
+    var contact: String? = null
         set(value)
         {
             field=value
@@ -43,8 +34,8 @@ class StudentShort : StudentSuper {
     }
     override fun toString() : String
     {
-        var out = "ID: $id, ФИО: $fio, "
-        if(git!=null)out+="Гит: $git "
+        var out = "ID: $id, ФИО: $fio "
+        if(git!=null)out+=", Гит: $git "
         if(contact!=null)out+=", Контакт: $contact"
 
         return out

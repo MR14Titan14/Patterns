@@ -9,16 +9,16 @@ class Main {
         println(vika.validate())
         vika.setContacts("89999999999","wrongtelegram","mail@yandex.ru")
         println(vika.toString())
-//        var igorInp= hashMapOf<String,Any?>(
-//            "lastname" to "Igorko",
-//            "name" to "Igor",
-//            "fathername" to "Igorevich"
-//        )
-//        var igor=Student(igorInp)
-//        println(igor.toString())
-//
-//        var danila=Student("Daniil Danilanin Danilavich")
-//        println(danila.toString())
+        var igorInp= hashMapOf<String,Any?>(
+            "lastname" to "Igorko",
+            "name" to "Igor",
+            "fathername" to "Igorevich"
+        )
+        var igor=Student(igorInp)
+        println(igor.toString())
+
+        var danila=Student("Daniil Danilanin Danilavich")
+        println(danila.toString())
 //        println(vika.getInfo())
 //        var vik=StudentShort(vika)
 //        println(vik.toString())
@@ -28,11 +28,29 @@ class Main {
 //            println(stud)
 //        }
 //        Student.writeToTxt("output.txt",studList)
-
-        var dtt=DataTable(arrayOf(arrayOf(1,2,3), arrayOf(4,5,6),arrayOf("a","b",3)))
-        println(dtt.getElement(2,2))
-        println(dtt.getRows())
-        println(dtt.getColumns())
+//
+//        var dtt=DataTable(mutableListOf(mutableListOf(1,2,3), mutableListOf(4,5,6), mutableListOf("a","b",3)))
+//        println(dtt.getElement(2,2))
+//        println(dtt.getRows())
+//        println(dtt.getColumns())
+        var dlss=DataListStudentShort(mutableListOf(
+            StudentShort(petya),
+            StudentShort(vika),
+            StudentShort(igor),
+            StudentShort(danila)
+        ))
+        dlss.select(1)
+        dlss.select(2)
+        var dtss=dlss.getTable()
+        for (i in 0..dtss.getRows()-1)
+        {
+            for(j in 0..dtss.getColumns()-1)
+            {
+                print(dtss.getElement(i,j))
+                print(" ")
+            }
+            println()
+        }
     }
 }
 
