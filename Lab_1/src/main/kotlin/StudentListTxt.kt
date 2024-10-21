@@ -18,7 +18,8 @@ class StudentListTxt {
         }
         for (line in text)
         {
-            res.add(Student(line))
+            var splited=line.split(" ")
+            res.add(Student(splited.get(0).toInt(),splited.get(1),splited.get(2),splited.get(3),splited.getOrNull(4),splited.getOrNull(5),splited.getOrNull(6),splited.getOrNull(7)))
         }
         return res
     }
@@ -29,8 +30,21 @@ class StudentListTxt {
         var text = ""
         for(stud in studentList)
         {
-            text+=(stud.toString()+"\n")
+            text+=(stud.toStringRaw()+"\n")
         }
         file.writeText(text)
+    }
+
+    fun getById(id:Int, path: String):Student?
+    {
+        var list = readFromTxt(path)
+        for(stud in list)
+        {
+            if(stud.id==id)
+            {
+                return stud
+            }
+        }
+        return null
     }
 }
