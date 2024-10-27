@@ -53,4 +53,9 @@ class StudentListTxt {
         var ss = s.map{StudentShort(it)}
         return DataList(ss)
     }
+
+    fun sortByShortname()
+    {
+        data.sortBy { it.getShortName() }
+    }
 }
