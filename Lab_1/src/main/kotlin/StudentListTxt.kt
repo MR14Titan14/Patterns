@@ -3,14 +3,14 @@ import java.io.FileNotFoundException
 import java.io.IOException
 
 class StudentListTxt {
-    fun readFromTxt(path:String): MutableList<Student>
+    var data:MutableList<Student> = mutableListOf()
+    fun readFromTxt(path:String)
     {
         val file = File(path)
         var res = mutableListOf<Student>()
         var text:List<String> = listOf()
         try {
             text = file.readLines()
-            println(text)
         } catch (e: FileNotFoundException) {
             println("File not found")
         } catch (e: IOException) {
@@ -21,24 +21,23 @@ class StudentListTxt {
             var splited=line.split(" ")
             res.add(Student(splited.get(0).toInt(),splited.get(1),splited.get(2),splited.get(3),splited.getOrNull(4),splited.getOrNull(5),splited.getOrNull(6),splited.getOrNull(7)))
         }
-        return res
+        data= res
     }
 
-    fun writeToTxt(path: String, studentList:MutableList<Student>)
+    fun writeToTxt(path: String)
     {
         val file = File(path)
         var text = ""
-        for(stud in studentList)
+        for(stud in data)
         {
             text+=(stud.toStringRaw()+"\n")
         }
         file.writeText(text)
     }
 
-    fun getById(id:Int, path: String):Student?
+    fun getById(id:Int):Student?
     {
-        var list = readFromTxt(path)
-        for(stud in list)
+        for(stud in data)
         {
             if(stud.id==id)
             {
@@ -46,5 +45,12 @@ class StudentListTxt {
             }
         }
         return null
+    }
+
+    fun getKNStudentShort(k: Int, n: Int) : DataList<StudentShort>
+    {
+        var s = data.subList((k-1)*n+1,n)
+        var ss = s.map{StudentShort(it)}
+        return DataList(ss)
     }
 }
