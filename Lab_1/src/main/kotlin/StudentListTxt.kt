@@ -58,4 +58,16 @@ class StudentListTxt {
     {
         data.sortBy { it.getShortName() }
     }
+
+    fun addStudent(stud:Student)
+    {
+        data.add(stud)
+    }
+
+    fun replaceStudent(id:Int,stud: Student)
+    {
+        var st = getById(id)
+        var i=data.indexOf(st)
+        data.set(i,stud)
+    }
 }
