@@ -70,4 +70,16 @@ class StudentListTxt {
         var i=data.indexOf(st)
         data.set(i,stud)
     }
+
+    fun deleteStudent(id:Int)
+    {
+        var st = getById(id)
+        var i=data.indexOf(st)
+        data.removeAt(i)
+    }
+    
+    fun getStudentShortCount():Int
+    {
+        return data.size
+    }
 }
