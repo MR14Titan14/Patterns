@@ -11,7 +11,16 @@ class StudentListJson {
     {
         val listType = object : TypeToken<MutableList<Student>>() {}.type
         var gson = Gson()
-        data = gson.fromJson(path,listType) ?: mutableListOf()
+        val file = File(path)
+        var text:String = ""
+        try {
+            text = file.readText()
+        } catch (e: FileNotFoundException) {
+            println("File not found")
+        } catch (e: IOException) {
+            println("Error reading file")
+        }
+        data = gson.fromJson(text,listType) ?: mutableListOf()
     }
 
     fun writeToFile(path:String)
