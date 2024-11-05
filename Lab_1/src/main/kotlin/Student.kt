@@ -1,9 +1,12 @@
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonCreator
+
 
 class Student : StudentSuper {
-    var lastname: String =""
+   @field:JsonProperty("lastname") var lastname: String =""
         set(value)
         {
             if(validateNames(value))
@@ -19,7 +22,7 @@ class Student : StudentSuper {
         {
             return field
         }
-    var name: String =""
+    @field:JsonProperty("name") var name: String =""
         set(value)
         {
             if(validateNames(value))
@@ -35,7 +38,7 @@ class Student : StudentSuper {
         {
             return field
         }
-    var fathername: String =""
+    @field:JsonProperty("fathername") var fathername: String =""
         set(value)
         {
             if(validateNames(value))
@@ -51,7 +54,7 @@ class Student : StudentSuper {
         {
             return field
         }
-    var phone: String? =null
+    @field:JsonProperty("phone") var phone: String? =null
         set(value)
         {
             if(validatePhone(value)) {
@@ -63,7 +66,7 @@ class Student : StudentSuper {
             return field
         }
 
-    var telegram: String? =null
+    @field:JsonProperty("telegram") var telegram: String? =null
         set(value)
         {
             if(validateTelegram(value))
@@ -76,7 +79,7 @@ class Student : StudentSuper {
             return field
         }
 
-    var mail: String? =null
+    @field:JsonProperty("mail") var mail: String? =null
         set(value)
         {
             if(validateMail(value))
@@ -120,27 +123,27 @@ class Student : StudentSuper {
         }
     }
 
-    fun getInfo() : String
+    fun info() : String
     {
-        var res ="ФИО: "+getShortName()
+        var res ="ФИО: "+shortName()
         if(hasGit())
         {
             res+= " Гит: "+git
         }
         if(hasContact())
         {
-            res+=" "+getContact()
+            res+=" "+contact()
         }
         return res
     }
 
-    fun getShortName(): String
+    fun shortName(): String
     {
         var res=lastname+" "+name[0]+"."+fathername[0]+". "
         return res
     }
 
-    fun getContact(): String
+    fun contact(): String
     {
         if(mail!=null)
         {
@@ -191,6 +194,25 @@ class Student : StudentSuper {
         }
     }
 
+    @JsonCreator constructor(
+        @JsonProperty("id") _id: String = "0",
+        @JsonProperty("git") _git: String? = "",
+        @JsonProperty("lastname") _lastname: String = "",
+        @JsonProperty("name")  _name: String = "",
+        @JsonProperty("fathername")  _fathername: String = "",
+        @JsonProperty("phone")  _phone: String? = null,
+        @JsonProperty("telegram")  _telegram: String? = null,
+        @JsonProperty("mail")  _mail: String? = null,)
+    {
+        id=_id.toInt()
+        lastname=_lastname
+        name=_name
+        fathername=_fathername
+        phone=_phone
+        telegram=_telegram
+        mail=_mail
+        git=_git
+    }
     constructor(_lastname:String,_name:String,_fathername:String)
     {
         id=ids
@@ -201,6 +223,18 @@ class Student : StudentSuper {
     constructor(_lastname:String,_name:String,_fathername:String,_phone:String?=null,_telegram:String?=null,_mail:String?=null,_git:String?=null)
     {
         id=ids
+        lastname=_lastname
+        name=_name
+        fathername=_fathername
+        phone=_phone
+        telegram=_telegram
+        mail=_mail
+        git=_git
+    }
+
+    constructor(_id:Int,_lastname:String,_name:String,_fathername:String,_phone:String?=null,_telegram:String?=null,_mail:String?=null,_git:String?=null)
+    {
+        id = _id
         lastname=_lastname
         name=_name
         fathername=_fathername
@@ -235,6 +269,16 @@ class Student : StudentSuper {
         if(telegram!=null)out+=", Телеграм: $telegram"
         if(mail!=null)out+=", Почта: $mail"
         if(git!=null)out+=", Гит: $git"
+        return out
+    }
+
+    fun toStringRaw() : String
+    {
+        var out = "$id $lastname $name $fathername"
+        if(phone!=null)out+=" $phone"
+        if(telegram!=null)out+=" $telegram"
+        if(mail!=null)out+=" $mail"
+        if(git!=null)out+=" $git"
         return out
     }
 }

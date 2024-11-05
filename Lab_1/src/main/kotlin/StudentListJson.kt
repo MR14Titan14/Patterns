@@ -51,7 +51,7 @@ class StudentListJson {
 
     fun sortByShortname()
     {
-        data.sortBy { it.getShortName() }
+        data.sortBy { it.shortName() }
     }
 
     fun addStudent(stud:Student)

@@ -1,38 +1,27 @@
 import java.io.File
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.FileNotFoundException
 import java.io.IOException
+import kotlin.io.path.Path
 
-class StudentListTxt {
+
+class StudentListYaml {
     var data:MutableList<Student> = mutableListOf()
-    fun readFromTxt(path:String)
+    fun readFromFile(path:String)
     {
-        val file = File(path)
-        var res = mutableListOf<Student>()
-        var text:List<String> = listOf()
-        try {
-            text = file.readLines()
-        } catch (e: FileNotFoundException) {
-            println("File not found")
-        } catch (e: IOException) {
-            println("Error reading file")
-        }
-        for (line in text)
-        {
-            var splited=line.split(" ")
-            res.add(Student(splited.get(0).toInt(),splited.get(1),splited.get(2),splited.get(3),splited.getOrNull(4),splited.getOrNull(5),splited.getOrNull(6),splited.getOrNull(7)))
-        }
-        data= res
+        val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+        data = mapper.readValue(File(path), mapper.typeFactory.constructCollectionType(MutableList::class.java, Student::class.java))
     }
 
-    fun writeToTxt(path: String)
+    fun writeToFile(path:String)
     {
         val file = File(path)
-        var text = ""
-        for(stud in data)
-        {
-            text+=(stud.toStringRaw()+"\n")
-        }
-        file.writeText(text)
+        val yamlMapper = ObjectMapper(YAMLFactory())
+        yamlMapper.writeValue(file, data)
     }
 
     fun getById(id:Int):Student?
