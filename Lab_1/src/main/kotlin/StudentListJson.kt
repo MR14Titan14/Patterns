@@ -3,10 +3,11 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import Strategy.StudentListStrategy
 
 
-class StudentListJson : StudentListSuper() {
-    fun readFromFile(path:String)
+class StudentListJson : StudentListSuper(),StudentListStrategy {
+    override fun readFromFile(path:String)
     {
         val listType = object : TypeToken<MutableList<Student>>() {}.type
         var gson = Gson()
@@ -22,7 +23,7 @@ class StudentListJson : StudentListSuper() {
         data = gson.fromJson(text,listType) ?: mutableListOf()
     }
 
-    fun writeToFile(path:String)
+    override fun writeToFile(path:String)
     {
         var gson = Gson()
         var json = gson.toJson(data)
