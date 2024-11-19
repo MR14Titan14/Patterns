@@ -46,16 +46,19 @@ class StudentsListDB private constructor() {
         }
     }
 
-    fun getByID(id: Int) {
+    fun getByID(id: Int):Student? {
         val result = executeQuery("SELECT * FROM student WHERE id = ${id};")
+        var input = ""
         if (result != null) {
             while (result.next()) {
-                for (i in 1..result.metaData.columnCount) {
-                    print("${result.getString(i)}\t")
+                input = ""
+                for (i in 2..result.metaData.columnCount) {
+                    input+=result.getString(i)+" "
                 }
-                println()
             }
+            return Student(input)
         }
+        return null
     }
 
     fun getKNStudentShort(k:Int,n:Int):MutableList<StudentShort>
