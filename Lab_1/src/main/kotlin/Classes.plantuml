@@ -1,0 +1,139 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Companion {
+   instance: StudentsListDB
+}
+class Companion {
+  + validateNames(String): Boolean
+  + validateMail(String?): Boolean
+  + validateTelegram(String?): Boolean
+  + validatePhone(String?): Boolean
+  + validateGit(String?): Boolean
+   ids: Int
+}
+class Companion {
+  + writeToTxt(String, List<Student>): Unit
+  + readFromTxt(String): List<Student>
+}
+class DataList<T> {
+  + DataList(List<T>): 
+  + select(Int): Unit
+   dataOfRows: List<List<Object>>
+   table: DataTable
+   names: String[]
+   data: List<T>
+   selected: List<Int>
+}
+class DataListStudentShort {
+  + DataListStudentShort(List<StudentShort>): 
+   dataOfRows: List<List<Object>>
+   names: String[]
+}
+class DataTable {
+  + DataTable(List<List<Object>>): 
+  + getElement(Int, Int): Object?
+   columns: Int
+   rows: Int
+}
+class Student {
+  + Student(String, String?, String, String, String, String?, String?, String?): 
+  + Student(String, String, String): 
+  + Student(String, String, String, String?, String?, String?, String?): 
+  + Student(Int, String, String, String, String?, String?, String?, String?): 
+  + Student(HashMap<String, Object>): 
+  + Student(String): 
+  + toString(): String
+  + shortName(): String
+  + validate(): Boolean
+  + contact(): String
+  - hasGit(): Boolean
+  + setContacts(String?, String?, String?): Unit
+  + toStringRaw(): String
+  + info(): String
+  - hasContact(): Boolean
+   name: String
+   fathername: String
+   mail: String?
+   phone: String?
+   lastname: String
+   telegram: String?
+}
+class StudentListJson {
+  + StudentListJson(): 
+  + writeToFile(String): Unit
+  + readFromFile(String): Unit
+}
+interface StudentListStrategy << interface >> {
+  + writeToFile(String): Unit
+  + readFromFile(String): Unit
+   data: List<Student>
+}
+class StudentListSuper {
+  + StudentListSuper(): 
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + addStudent(Student): Unit
+  + getById(Int): Student?
+  + replaceStudent(Int, Student): Unit
+  + sortByShortname(): Unit
+  + deleteStudent(Int): Unit
+   studentShortCount: Int
+   data: List<Student>
+}
+class StudentListTxt {
+  + StudentListTxt(): 
+  + writeToFile(String): Unit
+  + readFromFile(String): Unit
+}
+class StudentListYaml {
+  + StudentListYaml(): 
+  + readFromFile(String): Unit
+  + writeToFile(String): Unit
+}
+class StudentManager {
+  + StudentManager(StudentListStrategy): 
+  + writeToFile(String): Unit
+  + readFromFile(String): Unit
+   strategy: StudentListStrategy
+}
+class StudentShort {
+  + StudentShort(Student): 
+  + StudentShort(String): 
+  + toStringRaw(): String
+  + toString(): String
+   contact: String?
+   fio: String?
+}
+class StudentSuper {
+  + StudentSuper(): 
+   id: Int
+   git: String?
+}
+class StudentsListDB {
+  - StudentsListDB(): 
+  + getKNStudentShort(Int, Int): List<StudentShort>
+  + studentCount(): Int
+  + replaceStudent(Int, Student): Unit
+  + executeQuery(String): ResultSet?
+  + getByID(Int): Unit
+  + addStudent(Student): Unit
+  + deleteStudent(Int): Unit
+}
+
+Companion             +-[#820000,plain]-  Student              
+Companion             +-[#820000,plain]-  StudentSuper         
+Companion             +-[#820000,plain]-  StudentsListDB       
+DataListStudentShort  -[#000082,plain]-^  DataList             
+Student               -[#000082,plain]-^  StudentSuper         
+StudentListJson       -[#008200,dashed]-^  StudentListStrategy  
+StudentListJson       -[#000082,plain]-^  StudentListSuper     
+StudentListTxt        -[#008200,dashed]-^  StudentListStrategy  
+StudentListTxt        -[#000082,plain]-^  StudentListSuper     
+StudentListYaml       -[#008200,dashed]-^  StudentListStrategy  
+StudentListYaml       -[#000082,plain]-^  StudentListSuper     
+StudentManager        -[#000082,plain]-^  StudentListSuper     
+StudentShort          -[#000082,plain]-^  StudentSuper         
+@enduml
