@@ -29,7 +29,7 @@ class StudentsListDB constructor() {
             val stmt = connection.createStatement()
             stmt.executeQuery(query)
         } catch (e: Exception) {
-            e.printStackTrace()
+//            e.printStackTrace()
             null
         }
     }
@@ -75,8 +75,22 @@ class StudentsListDB constructor() {
         else{input+=", '${student.mail}'"}
         if(student.git==null){input+=", NULL"}
         else{input+=", '${student.git}'"}
-        println(input)
         executeQuery("INSERT INTO student (lastName, name, fatherName, phone, telegram, mail, git) VALUES (${input});")
+    }
+
+    fun replaceStudent(id:Int,student: Student)
+    {
+        var input = "'${student.lastname}', '${student.name}', '${student.fathername}'"
+        if(student.phone==null){input+=", NULL"}
+        else{input+=", '${student.phone}'"}
+        if(student.telegram==null){input+=", NULL"}
+        else{input+=", '${student.telegram}'"}
+        if(student.mail==null){input+=", NULL"}
+        else{input+=", '${student.mail}'"}
+        if(student.git==null){input+=", NULL"}
+        else{input+=", '${student.git}'"}
+        executeQuery("UPDATE student SET (lastName, name, fatherName, phone, telegram, mail, git) = (${input}) WHERE id=${id};")
+
     }
 }
 
@@ -84,5 +98,6 @@ fun main() {
     val studentDB = StudentsListDB()
 //    studentDB.getByID(1);
 //    studentDB.getKNStudentShort(1,2)
-    studentDB.addStudent(Student("Пипинов","Игорь","Васильевич"))
+//    studentDB.addStudent(Student("Пипинов","Игорь","Васильевич"))
+    studentDB.replaceStudent(5,Student("Пипинов","Василий","Игоревич"))
 }
