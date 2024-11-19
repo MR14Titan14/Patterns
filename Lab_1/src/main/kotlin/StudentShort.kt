@@ -20,10 +20,10 @@ class StudentShort : StudentSuper {
 
     constructor(stud:Student)
     {
-        id=ids
-        fio=stud.getShortName()
+        id=stud.id
+        fio=stud.shortName()
         git=stud.git
-        contact=stud.getContact().split(" ").getOrNull(1)
+        contact=stud.contact().split(" ").getOrNull(1)
     }
     constructor(input:String)
     {
@@ -32,11 +32,21 @@ class StudentShort : StudentSuper {
         git=input.split(" ").getOrNull(1)
         contact=input.split(" ").getOrNull(2)
     }
+
     override fun toString() : String
     {
-        var out = "ID: $id, ФИО: $fio "
-        if(git!=null)out+=", Гит: $git "
+        var out = "ID: $id, ФИО: $fio"
+        if(git!=null)out+=", Гит: $git"
         if(contact!=null)out+=", Контакт: $contact"
+
+        return out
+    }
+
+    fun toStringRaw() : String
+    {
+        var out = "$id $fio"
+        if(git!=null)out+=" $git "
+        if(contact!=null)out+=" $contact"
 
         return out
     }

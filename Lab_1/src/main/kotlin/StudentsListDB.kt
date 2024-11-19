@@ -73,7 +73,8 @@ class StudentsListDB private constructor() {
                 for (i in 2..result.metaData.columnCount) {
                     input+=result.getString(i)+" "
                 }
-                sl.add(StudentShort(Student(input)))
+                println(result.getInt(1))
+                sl.add(StudentShort(Student(input,result.getInt(1))))
             }
         }
         return sl
