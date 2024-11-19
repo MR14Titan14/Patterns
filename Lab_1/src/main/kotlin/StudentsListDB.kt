@@ -17,7 +17,7 @@ class StudentsListDB constructor() {
             connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5433/Students",
                 "postgres",
-                "Sonic2653"
+                ""
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -63,11 +63,26 @@ class StudentsListDB constructor() {
         }
         return sl
     }
+
+    fun addStudent(student:Student)
+    {
+        var input = "'${student.lastname}', '${student.name}', '${student.fathername}'"
+        if(student.phone==null){input+=", NULL"}
+        else{input+=", '${student.phone}'"}
+        if(student.telegram==null){input+=", NULL"}
+        else{input+=", '${student.telegram}'"}
+        if(student.mail==null){input+=", NULL"}
+        else{input+=", '${student.mail}'"}
+        if(student.git==null){input+=", NULL"}
+        else{input+=", '${student.git}'"}
+        println(input)
+        executeQuery("INSERT INTO student (lastName, name, fatherName, phone, telegram, mail, git) VALUES (${input});")
+    }
 }
 
 fun main() {
     val studentDB = StudentsListDB()
 //    studentDB.getByID(1);
-    studentDB.getKNStudentShort(1,2)
-
+//    studentDB.getKNStudentShort(1,2)
+    studentDB.addStudent(Student("Пипинов","Игорь","Васильевич"))
 }
