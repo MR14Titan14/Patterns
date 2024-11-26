@@ -3,12 +3,13 @@ package main.kotlin
 import Strategy.StudentListStrategy
 import StudentShort
 import Student
+import StudentLists.StudentListInterface
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
-import java.sql.Statement
+import DataList
 
-class StudentsListDB private constructor() {
+class StudentsListDB private constructor():StudentListInterface {
 
     companion object {
 
@@ -46,41 +47,44 @@ class StudentsListDB private constructor() {
         }
     }
 
-    fun getByID(id: Int):Student? {
+    override fun getById(id: Int):Student? {
         val result = executeQuery("SELECT * FROM student WHERE id = ${id};")
         var input = ""
+        var id = 0
         if (result != null) {
             while (result.next()) {
                 input = ""
+                id=result.getString(1).toInt()
                 for (i in 2..result.metaData.columnCount) {
                     input+=result.getString(i)+" "
                 }
             }
-            return Student(input)
+            return Student(input,id)
         }
         return null
     }
 
-    fun getKNStudentShort(k:Int,n:Int):MutableList<StudentShort>
+    override fun getKNStudentShort(k:Int,n:Int):DataList<StudentShort>
     {
         val start = k*n
-        val result = executeQuery("SELECT * FROM student WHERE id > ${start} ORDER BY id LIMIT ${n};")
+        val result = executeQuery("SELECT * FROM student ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
-        var sl=mutableListOf<StudentShort>()
+        var sl=mutableListOf<Student>()
         if (result != null) {
             while (result.next()) {
                 input = ""
                 for (i in 2..result.metaData.columnCount) {
                     input+=result.getString(i)+" "
                 }
-                println(result.getInt(1))
-                sl.add(StudentShort(Student(input,result.getInt(1))))
+                sl.add(Student(input,result.getInt(1)))
             }
         }
-        return sl
+        var ss = sl.map{StudentShort(it)}
+
+        return DataList(ss)
     }
 
-    fun addStudent(student:Student)
+    override fun addStudent(student:Student)
     {
         var input = "'${student.lastname}', '${student.name}', '${student.fathername}'"
         if(student.phone==null){input+=", NULL"}
@@ -94,7 +98,7 @@ class StudentsListDB private constructor() {
         executeQuery("INSERT INTO student (lastName, name, fatherName, phone, telegram, mail, git) VALUES (${input});")
     }
 
-    fun replaceStudent(id:Int,student: Student)
+    override fun replaceStudent(id:Int,student: Student)
     {
         var input = "'${student.lastname}', '${student.name}', '${student.fathername}'"
         if(student.phone==null){input+=", NULL"}
@@ -108,12 +112,12 @@ class StudentsListDB private constructor() {
         executeQuery("UPDATE student SET (lastName, name, fatherName, phone, telegram, mail, git) = (${input}) WHERE id=${id};")
     }
 
-    fun deleteStudent(id:Int)
+    override fun deleteStudent(id:Int)
     {
         executeQuery("DELETE FROM student WHERE id=${id};")
     }
 
-    fun studentCount():Int
+    override fun getStudentShortCount():Int
     {
         val result=executeQuery("SELECT COUNT(*) FROM student;")
         if(result!=null)
