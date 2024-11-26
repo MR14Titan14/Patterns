@@ -5,14 +5,11 @@ top to bottom direction
 skinparam linetype ortho
 
 class Companion {
-   instance: StudentsListDB
-}
-class Companion {
-  + validateNames(String): Boolean
-  + validateMail(String?): Boolean
-  + validateTelegram(String?): Boolean
   + validatePhone(String?): Boolean
+  + validateTelegram(String?): Boolean
+  + validateMail(String?): Boolean
   + validateGit(String?): Boolean
+  + validateNames(String): Boolean
    ids: Int
 }
 class Companion {
@@ -46,15 +43,16 @@ class Student {
   + Student(Int, String, String, String, String?, String?, String?, String?): 
   + Student(HashMap<String, Object>): 
   + Student(String): 
-  + toString(): String
-  + shortName(): String
+  + Student(String, Int): 
   + validate(): Boolean
-  + contact(): String
-  - hasGit(): Boolean
-  + setContacts(String?, String?, String?): Unit
-  + toStringRaw(): String
-  + info(): String
   - hasContact(): Boolean
+  + info(): String
+  - hasGit(): Boolean
+  + toStringRaw(): String
+  + shortName(): String
+  + setContacts(String?, String?, String?): Unit
+  + toString(): String
+  + contact(): String
    name: String
    fathername: String
    mail: String?
@@ -62,36 +60,37 @@ class Student {
    lastname: String
    telegram: String?
 }
-class StudentListJson {
-  + StudentListJson(): 
-  + writeToFile(String): Unit
-  + readFromFile(String): Unit
-}
-interface StudentListStrategy << interface >> {
-  + writeToFile(String): Unit
-  + readFromFile(String): Unit
-   data: List<Student>
-}
-class StudentListSuper {
-  + StudentListSuper(): 
-  + getKNStudentShort(Int, Int): DataList<StudentShort>
-  + addStudent(Student): Unit
+class StudentList {
+  + StudentList(String): 
   + getById(Int): Student?
   + replaceStudent(Int, Student): Unit
-  + sortByShortname(): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
   + deleteStudent(Int): Unit
+  + addStudent(Student): Unit
    studentShortCount: Int
+}
+class StudentListAdapter {
+  + StudentListAdapter(String): 
+  + getById(Int): Student?
+  + addStudent(Student): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + deleteStudent(Int): Unit
+  + replaceStudent(Int, Student): Unit
+   path: String
+   studentShortCount: Int
+}
+interface StudentListInterface << interface >> {
+  + deleteStudent(Int): Unit
+  + replaceStudent(Int, Student): Unit
+  + getById(Int): Student?
+  + addStudent(Student): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+   studentShortCount: Int
+}
+interface StudentListStrategy << interface >> {
+  + readFromFile(String): Unit
+  + writeToFile(String): Unit
    data: List<Student>
-}
-class StudentListTxt {
-  + StudentListTxt(): 
-  + writeToFile(String): Unit
-  + readFromFile(String): Unit
-}
-class StudentListYaml {
-  + StudentListYaml(): 
-  + readFromFile(String): Unit
-  + writeToFile(String): Unit
 }
 class StudentManager {
   + StudentManager(StudentListStrategy): 
@@ -109,31 +108,15 @@ class StudentShort {
 }
 class StudentSuper {
   + StudentSuper(): 
-   id: Int
    git: String?
-}
-class StudentsListDB {
-  - StudentsListDB(): 
-  + getKNStudentShort(Int, Int): List<StudentShort>
-  + studentCount(): Int
-  + replaceStudent(Int, Student): Unit
-  + executeQuery(String): ResultSet?
-  + getByID(Int): Unit
-  + addStudent(Student): Unit
-  + deleteStudent(Int): Unit
+   id: Int
 }
 
 Companion             +-[#820000,plain]-  Student              
 Companion             +-[#820000,plain]-  StudentSuper         
-Companion             +-[#820000,plain]-  StudentsListDB       
 DataListStudentShort  -[#000082,plain]-^  DataList             
 Student               -[#000082,plain]-^  StudentSuper         
-StudentListJson       -[#008200,dashed]-^  StudentListStrategy  
-StudentListJson       -[#000082,plain]-^  StudentListSuper     
-StudentListTxt        -[#008200,dashed]-^  StudentListStrategy  
-StudentListTxt        -[#000082,plain]-^  StudentListSuper     
-StudentListYaml       -[#008200,dashed]-^  StudentListStrategy  
-StudentListYaml       -[#000082,plain]-^  StudentListSuper     
-StudentManager        -[#000082,plain]-^  StudentListSuper     
+StudentList           -[#008200,dashed]-^  StudentListInterface 
+StudentListAdapter    -[#008200,dashed]-^  StudentListInterface 
 StudentShort          -[#000082,plain]-^  StudentSuper         
 @enduml
