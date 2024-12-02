@@ -1,6 +1,5 @@
 import Strategy.*
 import StudentLists.*
-import main.kotlin.StudentsListDB
 
 class Main {
     fun main() {
@@ -74,12 +73,11 @@ class Main {
 //    studentDB.deleteStudent(5)
 //    println(studentDB.getStudentShortCount())
 
-        var sl = StudentList("input.txt")
-        sl.addStudent(Student("Ермоленко", "Виктория", "Лепеховна"))
-        println(sl.getById(4).toString())
-        sl.replaceStudent(4, Student(4, "Емаековна", "Виктория", "Лепеховна"))
-        println(sl.getById(4).toString())
+        var sl = StudentList("pg")
+        println(sl.getKNStudents(0,10))
         println(sl.getStudentShortCount())
+
+
     }
 }
 

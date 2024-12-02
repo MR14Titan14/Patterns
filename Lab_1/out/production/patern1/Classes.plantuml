@@ -1,0 +1,122 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Companion {
+  + validatePhone(String?): Boolean
+  + validateTelegram(String?): Boolean
+  + validateMail(String?): Boolean
+  + validateGit(String?): Boolean
+  + validateNames(String): Boolean
+   ids: Int
+}
+class Companion {
+  + writeToTxt(String, List<Student>): Unit
+  + readFromTxt(String): List<Student>
+}
+class DataList<T> {
+  + DataList(List<T>): 
+  + select(Int): Unit
+   dataOfRows: List<List<Object>>
+   table: DataTable
+   names: String[]
+   data: List<T>
+   selected: List<Int>
+}
+class DataListStudentShort {
+  + DataListStudentShort(List<StudentShort>): 
+   dataOfRows: List<List<Object>>
+   names: String[]
+}
+class DataTable {
+  + DataTable(List<List<Object>>): 
+  + getElement(Int, Int): Object?
+   columns: Int
+   rows: Int
+}
+class Student {
+  + Student(String, String?, String, String, String, String?, String?, String?): 
+  + Student(String, String, String): 
+  + Student(String, String, String, String?, String?, String?, String?): 
+  + Student(Int, String, String, String, String?, String?, String?, String?): 
+  + Student(HashMap<String, Object>): 
+  + Student(String): 
+  + Student(String, Int): 
+  + validate(): Boolean
+  - hasContact(): Boolean
+  + info(): String
+  - hasGit(): Boolean
+  + toStringRaw(): String
+  + shortName(): String
+  + setContacts(String?, String?, String?): Unit
+  + toString(): String
+  + contact(): String
+   name: String
+   fathername: String
+   mail: String?
+   phone: String?
+   lastname: String
+   telegram: String?
+}
+class StudentList {
+  + StudentList(String): 
+  + getById(Int): Student?
+  + replaceStudent(Int, Student): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + deleteStudent(Int): Unit
+  + addStudent(Student): Unit
+   studentShortCount: Int
+}
+class StudentListAdapter {
+  + StudentListAdapter(String): 
+  + getById(Int): Student?
+  + addStudent(Student): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + deleteStudent(Int): Unit
+  + replaceStudent(Int, Student): Unit
+   path: String
+   studentShortCount: Int
+}
+interface StudentListInterface << interface >> {
+  + deleteStudent(Int): Unit
+  + replaceStudent(Int, Student): Unit
+  + getById(Int): Student?
+  + addStudent(Student): Unit
+  + getKNStudentShort(Int, Int): DataList<StudentShort>
+   studentShortCount: Int
+}
+interface StudentListStrategy << interface >> {
+  + readFromFile(String): Unit
+  + writeToFile(String): Unit
+   data: List<Student>
+}
+class StudentManager {
+  + StudentManager(StudentListStrategy): 
+  + writeToFile(String): Unit
+  + readFromFile(String): Unit
+   strategy: StudentListStrategy
+}
+class StudentShort {
+  + StudentShort(Student): 
+  + StudentShort(String): 
+  + toStringRaw(): String
+  + toString(): String
+   contact: String?
+   fio: String?
+}
+class StudentSuper {
+  + StudentSuper(): 
+   git: String?
+   id: Int
+}
+
+Companion             +-[#820000,plain]-  Student              
+Companion             +-[#820000,plain]-  StudentSuper         
+DataListStudentShort  -[#000082,plain]-^  DataList             
+Student               -[#000082,plain]-^  StudentSuper         
+StudentList           -[#008200,dashed]-^  StudentListInterface 
+StudentListAdapter    -[#008200,dashed]-^  StudentListInterface 
+StudentShort          -[#000082,plain]-^  StudentSuper         
+@enduml

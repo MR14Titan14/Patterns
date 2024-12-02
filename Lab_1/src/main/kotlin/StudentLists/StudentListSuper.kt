@@ -20,6 +20,12 @@ open class StudentListSuper {
         return DataList(ss)
     }
 
+    fun getKNStudents(k: Int, n: Int) : MutableList<Student>
+    {
+        var s = data.subList((k-1)*n+1,n)
+        return data
+    }
+
     fun sortByShortname()
     {
         data.sortBy { it.shortName() }

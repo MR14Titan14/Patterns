@@ -14,6 +14,7 @@ interface StudentListInterface
 {
     fun getById(id:Int):Student?
     fun getKNStudentShort(k: Int, n: Int) : DataList<StudentShort>
+    fun getKNStudents(k:Int, n:Int) : MutableList<Student>
     fun addStudent(stud:Student)
     fun replaceStudent(id:Int,stud: Student)
     fun deleteStudent(id:Int)
@@ -38,6 +39,10 @@ class StudentListAdapter(var path:String):StudentListInterface
 
     override fun getKNStudentShort(k: Int, n: Int): DataList<StudentShort> {
         return studentList?.getKNStudentShort(k,n) ?:DataList(mutableListOf())
+    }
+
+    override fun getKNStudents(k: Int, n: Int): MutableList<Student> {
+        return studentList?.getKNStudents(k,n)?: mutableListOf()
     }
 
     override fun addStudent(stud: Student) {
@@ -77,6 +82,10 @@ class StudentList(path: String):StudentListInterface {
 
     override fun getKNStudentShort(k: Int, n: Int): DataList<StudentShort> {
         return studentList?.getKNStudentShort(k,n) ?:DataList(mutableListOf())
+    }
+
+    override fun getKNStudents(k: Int, n: Int): MutableList<Student> {
+        return studentList?.getKNStudents(k,n)?: mutableListOf()
     }
 
     override fun addStudent(stud: Student) {

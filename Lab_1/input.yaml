@@ -1,0 +1,25 @@
+---
+- id: 1
+  git: null
+  lastname: "Vetkov"
+  name: "Petr"
+  fathername: "Govnokodov"
+  phone: null
+  telegram: null
+  mail: null
+- id: 2
+  git: "https://github.com/Vilieba"
+  lastname: "Shelestak"
+  name: "Vika"
+  fathername: "Lepyohovna"
+  phone: "+79999999999"
+  telegram: "@asba_XXX15"
+  mail: "mailexample@gmail.com"
+- id: 3
+  git: null
+  lastname: "Daniil"
+  name: "Danilanin"
+  fathername: "Danilavich"
+  phone: null
+  telegram: null
+  mail: null
