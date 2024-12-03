@@ -1,5 +1,3 @@
-package main.kotlin
-
 import Strategy.StudentListStrategy
 import StudentShort
 import Student
@@ -64,9 +62,9 @@ class StudentsListDB private constructor():StudentListInterface {
         return null
     }
 
-    override fun getKNStudentShort(k:Int,n:Int):DataList<StudentShort>
+    override fun getKNStudentShort(k:Int,n:Int, filter: String):MutableList<StudentShort>
     {
-        val result = executeQuery("SELECT * FROM student ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
         var sl=mutableListOf<Student>()
         if (result != null) {
@@ -78,14 +76,14 @@ class StudentsListDB private constructor():StudentListInterface {
                 sl.add(Student(input,result.getInt(1)))
             }
         }
-        var ss = sl.map{StudentShort(it)}
+        var ss = sl.map{StudentShort(it)} as MutableList<StudentShort>
 
-        return DataList(ss)
+        return ss
     }
 
-    override fun getKNStudents(k:Int,n:Int):MutableList<Student>
+    override fun getKNStudent(k:Int,n:Int, filter: String):MutableList<Student>
     {
-        val result = executeQuery("SELECT * FROM student ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
         var sl=mutableListOf<Student>()
         if (result != null) {
@@ -94,9 +92,11 @@ class StudentsListDB private constructor():StudentListInterface {
                 for (i in 2..result.metaData.columnCount) {
                     input+=result.getString(i)+" "
                 }
+//                println(input)
                 sl.add(Student(input,result.getInt(1)))
             }
         }
+
         return sl
     }
 

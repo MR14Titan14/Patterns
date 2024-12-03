@@ -13,17 +13,17 @@ open class StudentListSuper {
         return null
     }
 
-    fun getKNStudentShort(k: Int, n: Int) : DataList<StudentShort>
+    fun getKNStudentShort(k: Int, n: Int) : MutableList<StudentShort>
     {
         var s = data.subList((k-1)*n+1,n)
-        var ss = s.map{StudentShort(it)}
-        return DataList(ss)
+        var ss = s.map{StudentShort(it)} as MutableList<StudentShort>
+        return ss
     }
 
-    fun getKNStudents(k: Int, n: Int) : MutableList<Student>
+    fun getKNStudent(k: Int, n: Int) : MutableList<Student>
     {
         var s = data.subList((k-1)*n+1,n)
-        return data
+        return s
     }
 
     fun sortByShortname()
