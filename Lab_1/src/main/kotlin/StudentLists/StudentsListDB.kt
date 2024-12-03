@@ -28,7 +28,7 @@ class StudentsListDB private constructor():StudentListInterface {
             connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5433/Students",
                 "postgres",
-                "Sonic2653"
+                ""
             )
         } catch (e: Exception) {
             e.printStackTrace()
