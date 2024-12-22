@@ -20,6 +20,8 @@ import javafx.stage.Modality
 class View : Application() {
     private val readController=ReadController(this)
     private val createController=CreateController(this);
+    private val updateController=UpdateController(this);
+
 
 
     private lateinit var tableView: TableView<StudentShort>
@@ -115,26 +117,17 @@ class View : Application() {
 
         val addButton = Button("Добавить").apply {
             setOnAction {
-                openModalWindow(0, "", "", "", "", "", "", "")
+                openModalWindow(0)
             }
         }
 
         val changeButton = Button("Изменить").apply {
-//            setOnAction {
-//                val selected = tableView.selectionModel.selectedItem
-//                if (selected != null) {
-//                    openModalWindow(
-//                        selected.id,
-//                        selected.lastname,
-//                        selected.name,
-//                        selected.fathername,
-//                        selected.phone ?: "",
-//                        selected.telegram ?: "",
-//                        selected.mail ?: "",
-//                        selected.git ?: ""
-//                    )
-//                }
-//            }
+            setOnAction {
+                val selected = tableView.selectionModel.selectedItem
+                if (selected != null) {
+                    openModalWindow(selected.id)
+                }
+            }
         }
 
         val deleteButton = Button("Удалить").apply {
@@ -182,13 +175,6 @@ class View : Application() {
 
     private fun openModalWindow(
         id: Int = 0,
-        lasName: String,
-        name: String,
-        fatherName: String,
-        phone: String,
-        telegram: String,
-        mail: String,
-        git: String
     ) {
         val modalStage = Stage()
         modalStage.initModality(Modality.APPLICATION_MODAL)
@@ -198,19 +184,23 @@ class View : Application() {
         grid.hgap = 10.0
         grid.vgap = 10.0
         val lastNameField = TextField()
-        lastNameField.text = lasName
         val nameField = TextField()
-        nameField.text = name
         val fatherNameField = TextField()
-        fatherNameField.text = fatherName
         val phoneField = TextField()
-        phoneField.text = phone
         val telegramField = TextField()
-        telegramField.text = telegram
         val mailField = TextField()
-        mailField.text = mail
         val gitField = TextField()
-        gitField.text = git
+        if(id!=0)
+        {
+            var params=updateController.getStudent(id)
+            lastNameField.text=params[0]
+            nameField.text=params[1]
+            fatherNameField.text=params[2]
+            phoneField.text=params[3]
+            telegramField.text=params[4]
+            mailField.text=params[5]
+            gitField.text=params[6]
+        }
         grid.add(Label("Фамилия:"), 0, 1)
         grid.add(lastNameField, 1, 1)
         grid.add(Label("Имя:"), 0, 2)
@@ -239,18 +229,8 @@ class View : Application() {
                 createController.addStudent(lastNameField.text,nameField.text,fatherNameField.text,phoneField.text,telegramField.text,mailField.text,gitField.text)
                 readController.refresh_data()
             } else {
-//                pg.replaceStudent(
-//                    id,
-//                    Student(
-//                        _lastname = lastNameField.text,
-//                        nameField.text,
-//                        fatherNameField.text,
-//                        phoneField.text,
-//                        telegramField.text,
-//                        mailField.text,
-//                        gitField.text
-//                    )
-//                )
+                updateController.updateStudent(id,lastNameField.text, nameField.text,fatherNameField.text, phoneField.text, telegramField.text, mailField.text, gitField.text)
+                readController.refresh_data()
             }
             modalStage.close()
         }
