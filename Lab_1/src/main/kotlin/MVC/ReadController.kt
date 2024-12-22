@@ -2,7 +2,7 @@ package MVC
 import DataListStudentShort
 import StudentLists.StudentList
 
-class Controller(var view:View) {
+class ReadController(var view:View) {
 
     private val pg=StudentList("pg",view)
     public var currentPage=0
@@ -21,15 +21,7 @@ class Controller(var view:View) {
     public fun refresh_data()
     {
         studentShorts=pg.getKNStudentShort(currentPage,studentsPerPage,"")
-        view.updatePageLabel( "${currentPage + 1}/${
-            Math.ceil(
-                pg.getKNStudent(
-                    0,
-                    pg.getStudentShortCount(),
-                    currentFilter
-                ).size.toDouble() / studentsPerPage.toDouble()
-            ).toInt()
-        }")
+        view.updatePageLabel( "${currentPage + 1}/${Math.ceil(pg.getKNStudent(0, pg.getStudentShortCount(), currentFilter).size.toDouble() / studentsPerPage.toDouble()).toInt()}")
     }
 //    private fun updateTable() {
 //        currentFilter = ""
@@ -113,15 +105,4 @@ class Controller(var view:View) {
 //        tableView.items.setAll(students)
 //    }
 //
-//    private fun updatePageLabel() {
-//        pageLabel.text = "${currentPage + 1}/${
-//            Math.ceil(
-//                pg.getKNStudent(
-//                    0,
-//                    pg.getStudentShortCount(),
-//                    currentFilter
-//                ).size.toDouble() / itemsPerPage.toDouble()
-//            ).toInt()
-//        }"
-//    }
 }
