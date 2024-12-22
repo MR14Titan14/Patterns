@@ -1,5 +1,8 @@
+import MVC.View
+
 open class StudentListSuper {
     var data:MutableList<Student> = mutableListOf()
+    var view: View = View()
 
     fun getById(id:Int):Student?
     {
@@ -13,11 +16,11 @@ open class StudentListSuper {
         return null
     }
 
-    fun getKNStudentShort(k: Int, n: Int) : MutableList<StudentShort>
+    fun getKNStudentShort(k: Int, n: Int) : DataListStudentShort
     {
         var s = data.subList((k-1)*n+1,n)
         var ss = s.map{StudentShort(it)} as MutableList<StudentShort>
-        return ss
+        return DataListStudentShort(ss,view)
     }
 
     fun getKNStudent(k: Int, n: Int) : MutableList<Student>

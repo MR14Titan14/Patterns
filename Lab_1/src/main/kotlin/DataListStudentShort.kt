@@ -1,4 +1,17 @@
-class DataListStudentShort(studentList: List<StudentShort>) : DataList<StudentShort>(studentList) {
+import MVC.View
+
+class DataListStudentShort(studentList: List<StudentShort>, var view: View) : DataList<StudentShort>(studentList) {
+
+
+
+    init{
+        notifyView()
+    }
+
+    public fun notifyView()
+    {
+        view.updateTables(data)
+    }
 
     override fun getNames():Array<String>
     {

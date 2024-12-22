@@ -6,17 +6,18 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import DataList
+import MVC.View
 
-class StudentsListDB private constructor():StudentListInterface {
+class StudentsListDB private constructor(var view:View):StudentListInterface {
 
     companion object {
 
         @Volatile
         private var instance: StudentsListDB? = null
 
-        fun getInstance() =
+        fun getInstance(_view:View) =
             instance ?: synchronized(this) {
-                instance ?: StudentsListDB().also { instance = it }
+                instance ?: StudentsListDB(_view).also { instance = it }
             }
     }
 
@@ -28,7 +29,7 @@ class StudentsListDB private constructor():StudentListInterface {
             connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5433/Students",
                 "postgres",
-                ""
+                "Sonic2653"
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -62,7 +63,7 @@ class StudentsListDB private constructor():StudentListInterface {
         return null
     }
 
-    override fun getKNStudentShort(k:Int,n:Int, filter: String):MutableList<StudentShort>
+    override fun getKNStudentShort(k:Int,n:Int, filter: String):DataListStudentShort
     {
         val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
@@ -78,7 +79,7 @@ class StudentsListDB private constructor():StudentListInterface {
         }
         var ss = sl.map{StudentShort(it)} as MutableList<StudentShort>
 
-        return ss
+        return DataListStudentShort(ss,view)
     }
 
     override fun getKNStudent(k:Int,n:Int, filter: String):MutableList<Student>

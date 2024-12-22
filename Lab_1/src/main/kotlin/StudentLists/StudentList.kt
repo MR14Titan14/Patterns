@@ -3,6 +3,8 @@ package StudentLists
 import Student
 import StudentShort
 import DataList
+import DataListStudentShort
+import MVC.View
 import Strategy.StudentListStrategy
 import StudentListJson
 import StudentListTxt
@@ -12,7 +14,7 @@ import StudentsListDB
 
 interface StudentListInterface {
     fun getById(id: Int): Student?
-    fun getKNStudentShort(k: Int, n: Int, filter: String): MutableList<StudentShort>
+    fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort
     fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student>
     fun addStudent(stud: Student)
     fun replaceStudent(id: Int, stud: Student)
@@ -20,7 +22,7 @@ interface StudentListInterface {
     fun getStudentShortCount(): Int
 }
 
-class StudentListAdapter(var path: String) : StudentListInterface {
+class StudentListAdapter(var path: String,var view: View) : StudentListInterface {
     private var studentList: StudentManager? = null
 
     init {
@@ -37,8 +39,8 @@ class StudentListAdapter(var path: String) : StudentListInterface {
         return studentList?.getById(id)
     }
 
-    override fun getKNStudentShort(k: Int, n: Int, filter: String): MutableList<StudentShort> {
-        return studentList?.getKNStudentShort(k, n) ?: mutableListOf()
+    override fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort {
+        return studentList?.getKNStudentShort(k, n) ?: DataListStudentShort(mutableListOf(),view)
     }
 
     override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {
@@ -63,14 +65,14 @@ class StudentListAdapter(var path: String) : StudentListInterface {
 }
 
 
-class StudentList(path: String) : StudentListInterface {
+class StudentList(path: String, var view: View) : StudentListInterface {
     private var studentList: StudentListInterface? = null
 
     init {
         if (path == "pg") {
-            studentList = StudentsListDB.getInstance()
+            studentList = StudentsListDB.getInstance(view)
         } else {
-            studentList = StudentListAdapter(path)
+            studentList = StudentListAdapter(path,view)
         }
     }
 
@@ -78,8 +80,8 @@ class StudentList(path: String) : StudentListInterface {
         return studentList?.getById(id)
     }
 
-    override fun getKNStudentShort(k: Int, n: Int, filter: String): MutableList<StudentShort> {
-        return studentList?.getKNStudentShort(k, n, filter) ?: mutableListOf()
+    override fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort {
+        return studentList?.getKNStudentShort(k, n, filter) ?: DataListStudentShort(mutableListOf(),view)
     }
 
     override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {

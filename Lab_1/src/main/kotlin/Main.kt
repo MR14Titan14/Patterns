@@ -73,9 +73,8 @@ class Main {
 //    studentDB.deleteStudent(5)
 //    println(studentDB.getStudentShortCount())
 
-        var sl = StudentList("pg")
-        println(sl.getKNStudents(0,10))
-        println(sl.getStudentShortCount())
+//        var sl = StudentList("pg")
+//        println(sl.getStudentShortCount())
 
 
     }
