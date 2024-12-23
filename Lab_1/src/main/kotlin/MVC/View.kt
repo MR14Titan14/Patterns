@@ -21,7 +21,7 @@ class View : Application() {
     private val readController=ReadController(this)
     private val createController=CreateController(this);
     private val updateController=UpdateController(this);
-
+    private val deleteController=DeleteController(this);
 
 
     private lateinit var tableView: TableView<StudentShort>
@@ -118,6 +118,7 @@ class View : Application() {
         val addButton = Button("Добавить").apply {
             setOnAction {
                 openModalWindow(0)
+                readController.refresh_data()
             }
         }
 
@@ -126,18 +127,19 @@ class View : Application() {
                 val selected = tableView.selectionModel.selectedItem
                 if (selected != null) {
                     openModalWindow(selected.id)
+                    readController.refresh_data()
                 }
             }
         }
 
         val deleteButton = Button("Удалить").apply {
-//            setOnAction {
-//                val selected = tableView.selectionModel.selectedItem
-//                if (selected != null) {
-//                    pg.deleteStudent(selected.id)
-//                    readController.refresh_data()
-//                }
-//            }
+            setOnAction {
+                val selected = tableView.selectionModel.selectedItem
+                if (selected != null) {
+                    deleteController.deleteStudent(selected.id)
+                    readController.refresh_data()
+                }
+            }
         }
         val updateButton = Button("Обновить таблицу").apply {
             setOnAction {

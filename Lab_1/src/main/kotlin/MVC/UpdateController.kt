@@ -14,7 +14,7 @@ class UpdateController(var view:View) {
     public fun getStudent(id:Int): List<String?>
     {
         val stud = pg.getById(id)
-        return listOf(stud?.lastname,stud?.name,stud?.fathername,stud?.phone,stud?.telegram,stud?.mail,stud?.git)
+        return listOf(stud?.lastname?:"",stud?.name?:"",stud?.fathername?:"",stud?.phone?:"",stud?.telegram?:"",stud?.mail?:"",stud?.git?:"")
     }
 
 }
