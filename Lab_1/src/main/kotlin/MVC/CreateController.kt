@@ -2,9 +2,9 @@ package MVC
 import Student
 import StudentLists.StudentList
 
-class CreateController(var view:View) {
+class CreateController(var view:View,source:StudentList) {
 
-    private val pg=StudentList("pg",view)
+    private val pg=source
 
     public fun addStudent(lastName:String,name:String,fatherName:String,phone:String,telegram:String,mail:String,git:String)
     {

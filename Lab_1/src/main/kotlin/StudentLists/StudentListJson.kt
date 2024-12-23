@@ -1,3 +1,4 @@
+import MVC.View
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -6,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 import Strategy.StudentListStrategy
 
 
-class StudentListJson : StudentListSuper(),StudentListStrategy {
+class StudentListJson(view: View) : StudentListSuper(view),StudentListStrategy {
     override fun readFromFile(path:String)
     {
         val listType = object : TypeToken<MutableList<Student>>() {}.type

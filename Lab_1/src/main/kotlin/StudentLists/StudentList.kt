@@ -27,11 +27,11 @@ class StudentListAdapter(var path: String,var view: View) : StudentListInterface
 
     init {
         if (path.split('.')[1] == "txt")
-            studentList = StudentManager(StudentListTxt())
+            studentList = StudentManager(StudentListTxt(view),view)
         if (path.split('.')[1] == "json")
-            studentList = StudentManager(StudentListJson())
+            studentList = StudentManager(StudentListJson(view),view)
         if (path.split('.')[1] == "yaml")
-            studentList = StudentManager(StudentListYaml())
+            studentList = StudentManager(StudentListYaml(view),view)
         studentList?.readFromFile(path)
     }
 
@@ -49,14 +49,17 @@ class StudentListAdapter(var path: String,var view: View) : StudentListInterface
 
     override fun addStudent(stud: Student) {
         studentList?.addStudent(stud)
+        studentList?.writeToFile(path)
     }
 
     override fun replaceStudent(id: Int, stud: Student) {
         studentList?.replaceStudent(id, stud)
+        studentList?.writeToFile(path)
     }
 
     override fun deleteStudent(id: Int) {
         studentList?.deleteStudent(id)
+        studentList?.writeToFile(path)
     }
 
     override fun getStudentShortCount(): Int {
@@ -68,11 +71,13 @@ class StudentListAdapter(var path: String,var view: View) : StudentListInterface
 class StudentList(path: String, var view: View) : StudentListInterface {
     private var studentList: StudentListInterface? = null
 
+    var isfile=false
     init {
         if (path == "pg") {
             studentList = StudentsListDB.getInstance(view)
         } else {
             studentList = StudentListAdapter(path,view)
+            isfile=true
         }
     }
 

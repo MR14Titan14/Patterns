@@ -18,10 +18,12 @@ import javafx.stage.Modality
 
 
 class View : Application() {
-    private val readController=ReadController(this)
-    private val createController=CreateController(this);
-    private val updateController=UpdateController(this);
-    private val deleteController=DeleteController(this);
+    var path="input.yaml"
+    var source=StudentList(path,this)
+    private val readController=ReadController(this,source)
+    private val createController=CreateController(this,source);
+    private val updateController=UpdateController(this,source);
+    private val deleteController=DeleteController(this,source);
 
 
     private lateinit var tableView: TableView<StudentShort>

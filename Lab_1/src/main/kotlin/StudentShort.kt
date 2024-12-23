@@ -21,6 +21,7 @@ class StudentShort : StudentSuper {
     constructor(stud:Student)
     {
         id=stud.id
+        ids=id
         fio=stud.shortName()
         git=stud.git
         contact=stud.contact().split(" ").getOrNull(1)

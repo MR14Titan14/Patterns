@@ -1,9 +1,10 @@
+import MVC.View
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import Strategy.StudentListStrategy
 
-class StudentListTxt : StudentListSuper(),StudentListStrategy {
+class StudentListTxt(view: View) : StudentListSuper(view),StudentListStrategy {
     override fun readFromFile(path:String)
     {
         val file = File(path)

@@ -2,9 +2,9 @@ package MVC
 import DataListStudentShort
 import StudentLists.StudentList
 
-class ReadController(var view:View) {
+class ReadController(var view:View,source:StudentList) {
 
-    private val pg=StudentList("pg",view)
+    private val pg=source
     public var currentPage=0
         set(value)
         {
