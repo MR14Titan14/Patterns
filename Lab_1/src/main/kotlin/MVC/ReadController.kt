@@ -1,6 +1,8 @@
 package MVC
 import DataListStudentShort
+import Student
 import StudentLists.StudentList
+import StudentShort
 
 class ReadController(var view:View,source:StudentList) {
 
@@ -14,95 +16,61 @@ class ReadController(var view:View,source:StudentList) {
             }
         }
     private var studentsPerPage=5
-    public var currentFilter =""
+    public var currentFilter = mutableListOf<Boolean>()
     private lateinit var studentShorts:DataListStudentShort
 
 
     public fun refresh_data()
     {
-        studentShorts=pg.getKNStudentShort(currentPage,studentsPerPage,"")
-        view.updatePageLabel( "${currentPage + 1}/${Math.ceil(pg.getKNStudent(0, pg.getStudentShortCount(), currentFilter).size.toDouble() / studentsPerPage.toDouble()).toInt()}")
+        view.refreshFilters()
+        var students=pg.getKNStudent(0,pg.getStudentShortCount())
+        if(view.filters[0]!="")
+        {
+            students=students.filter { it.shortName()==view.filters[0] } as MutableList<Student>
+        }
+        if(view.filters[1]=="Да")
+        {
+            students=students.filter { it.contact()!="" } as MutableList<Student>
+        }
+        if(view.filters[1]=="Нет")
+        {
+            students=students.filter { it.contact()=="" } as MutableList<Student>
+        }
+        if(view.filters[2]!=""&&view.filters[1]=="Да")
+        {
+            students=students.filter { it.phone==view.filters[2]||it.telegram==view.filters[2]||it.mail==view.filters[2] } as MutableList<Student>
+        }
+        if(view.filters[3]=="Да")
+        {
+            students=students.filter { it.git!=null } as MutableList<Student>
+        }
+        if(view.filters[3]=="Нет")
+        {
+            students=students.filter { it.git==null } as MutableList<Student>
+        }
+        if(view.filters[4]!=""&&view.filters[3]=="Да")
+        {
+            students=students.filter { it.git==view.filters[4] } as MutableList<Student>
+        }
+        var size=students.size
+        try {
+            if (currentPage >= Math.ceil(size.toDouble() / studentsPerPage.toDouble()).toInt()) {
+                currentPage = Math.ceil(size.toDouble() / studentsPerPage.toDouble()).toInt()-1
+            }
+            if (currentPage * studentsPerPage + studentsPerPage <= students.size) {
+                students =
+                    students.subList(currentPage * studentsPerPage, currentPage * studentsPerPage + studentsPerPage)
+            } else {
+                students = students.subList(
+                    currentPage * studentsPerPage,
+                    currentPage * studentsPerPage + students.size - currentPage * studentsPerPage
+                )
+            }
+        }
+        catch(e: Exception){
+
+        }
+        studentShorts=DataListStudentShort(students.map { StudentShort(it) },view)
+        view.updatePageLabel( "${currentPage + 1}/${Math.ceil(size.toDouble() / studentsPerPage.toDouble()).toInt()}")
     }
-//    private fun updateTable() {
-//        currentFilter = ""
-//        if (nameField.text != "" || gitComboBox.value != "Не важно" || phoneComboBox.value != "Не важно" || telegramComboBox.value != "Не важно" || mailComboBox.value != "Не важно") {
-//            currentFilter += "WHERE"
-//        }
-//        if (nameField.text != "") {
-//            currentFilter += " lastname = '${nameField.text.split(" ")[0]}' AND name = '${nameField.text.split(" ")[1]}' AND fathername = '${
-//                nameField.text.split(
-//                    " "
-//                )[2]
-//            }'"
-//        }
-//        if (gitComboBox.value != "Не важно") {
-//            if (currentFilter != "WHERE") {
-//                currentFilter += " AND"
-//            }
-//            if (gitComboBox.value == "Нет") {
-//                currentFilter += " git is NULL"
-//            }
-//
-//            if (gitComboBox.value == "Да") {
-//                currentFilter += " git is NOT NULL"
-//                if (gitField.text != "") {
-//                    currentFilter += " AND git = '${gitField.text}'"
-//                }
-//            }
-//
-//        }
-//
-//        if (phoneComboBox.value != "Не важно") {
-//            if (currentFilter != "WHERE") {
-//                currentFilter += " AND"
-//            }
-//            if (phoneComboBox.value == "Нет") {
-//                currentFilter += " phone is NULL"
-//            }
-//
-//            if (phoneComboBox.value == "Да") {
-//                currentFilter += " phone is NOT NULL"
-//                if (phoneField.text != "") {
-//                    currentFilter += " AND phone = '${phoneField.text}'"
-//                }
-//            }
-//        }
-//
-//        if (telegramComboBox.value != "Не важно") {
-//            if (currentFilter != "WHERE") {
-//                currentFilter += " AND"
-//            }
-//            if (telegramComboBox.value == "Нет") {
-//                currentFilter += " telegram is NULL"
-//            }
-//
-//            if (telegramComboBox.value == "Да") {
-//                currentFilter += " telegram is NOT NULL"
-//                if (telegramField.text != "") {
-//                    currentFilter += " AND telegram = '${telegramField.text}'"
-//                }
-//            }
-//        }
-//
-//        if (mailComboBox.value != "Не важно") {
-//            if (currentFilter != "WHERE") {
-//                currentFilter += " AND"
-//            }
-//            if (mailComboBox.value == "Нет") {
-//                currentFilter += " mail is NULL"
-//            }
-//
-//            if (mailComboBox.value == "Да") {
-//                currentFilter += " mail is NOT NULL"
-//                if (mailField.text != "") {
-//                    currentFilter += " AND mail = '${mailField.text}'"
-//                }
-//            }
-//        }
-//
-//        students = pg.getKNStudent(currentPage, itemsPerPage, currentFilter)
-//        updatePageLabel()
-//        tableView.items.setAll(students)
-//    }
-//
 }

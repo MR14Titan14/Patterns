@@ -14,8 +14,8 @@ import StudentsListDB
 
 interface StudentListInterface {
     fun getById(id: Int): Student?
-    fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort
-    fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student>
+    fun getKNStudentShort(k: Int, n: Int): DataListStudentShort
+    fun getKNStudent(k: Int, n: Int): MutableList<Student>
     fun addStudent(stud: Student)
     fun replaceStudent(id: Int, stud: Student)
     fun deleteStudent(id: Int)
@@ -39,11 +39,11 @@ class StudentListAdapter(var path: String,var view: View) : StudentListInterface
         return studentList?.getById(id)
     }
 
-    override fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort {
+    override fun getKNStudentShort(k: Int, n: Int): DataListStudentShort {
         return studentList?.getKNStudentShort(k, n) ?: DataListStudentShort(mutableListOf(),view)
     }
 
-    override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {
+    override fun getKNStudent(k: Int, n: Int): MutableList<Student> {
         return studentList?.getKNStudent(k, n) ?: mutableListOf()
     }
 
@@ -85,12 +85,12 @@ class StudentList(path: String, var view: View) : StudentListInterface {
         return studentList?.getById(id)
     }
 
-    override fun getKNStudentShort(k: Int, n: Int, filter: String): DataListStudentShort {
-        return studentList?.getKNStudentShort(k, n, filter) ?: DataListStudentShort(mutableListOf(),view)
+    override fun getKNStudentShort(k: Int, n: Int): DataListStudentShort {
+        return studentList?.getKNStudentShort(k, n) ?: DataListStudentShort(mutableListOf(),view)
     }
 
-    override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {
-        return studentList?.getKNStudent(k, n, filter) ?: mutableListOf()
+    override fun getKNStudent(k: Int, n: Int): MutableList<Student> {
+        return studentList?.getKNStudent(k, n) ?: mutableListOf()
     }
 
     override fun addStudent(stud: Student) {

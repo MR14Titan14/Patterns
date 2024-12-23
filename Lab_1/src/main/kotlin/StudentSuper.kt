@@ -36,6 +36,11 @@ open class StudentSuper {
             return value.matches(Regex("""[A-Я]{1}[a-я]*"""))
         }
 
+        fun validateFatherName(value:String?): Boolean
+        {
+            return value?.matches(Regex("""[A-Я]{1}[a-я]*"""))?:true
+        }
+
          fun validateTelegram(value:String?): Boolean
         {
             return value?.matches(Regex("""\@{1}.*""")) ?: true

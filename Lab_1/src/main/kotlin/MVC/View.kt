@@ -18,7 +18,7 @@ import javafx.stage.Modality
 
 
 class View : Application() {
-    var path="input.yaml"
+    var path="input.txt"
     var source=StudentList(path,this)
     private val readController=ReadController(this,source)
     private val createController=CreateController(this,source);
@@ -35,6 +35,10 @@ class View : Application() {
     private lateinit var contactFilterVar: ObservableList<String>
     private lateinit var contactComboBox: ComboBox<String>
     private lateinit var contactField: TextField
+    public var errorLabel = Label()
+
+
+    public var filters= mutableListOf<String>("","","","","")
 
 
     override fun start(primaryStage: Stage) {
@@ -177,9 +181,19 @@ class View : Application() {
         pageLabel.text=text
     }
 
+    public fun refreshFilters()
+    {
+        filters[0] = nameField.text
+        filters[1] = contactComboBox.value
+        filters[2] = contactField.text
+        filters[3] = gitComboBox.value
+        filters[4] = gitField.text
+    }
+
     private fun openModalWindow(
         id: Int = 0,
     ) {
+        errorLabel.text=""
         val modalStage = Stage()
         modalStage.initModality(Modality.APPLICATION_MODAL)
         modalStage.title = "Ввод данных"
@@ -219,16 +233,9 @@ class View : Application() {
         grid.add(mailField, 1, 6)
         grid.add(Label("Гит:"), 0, 7)
         grid.add(gitField, 1, 7)
+        grid.add(errorLabel,2,8)
         val submitButton = Button("Отправить")
         submitButton.setOnAction {
-            // Здесь можно обработать данные из полей
-            println("Фамилия: ${lastNameField.text}")
-            println("Имя: ${nameField.text}")
-            println("Отчество: ${fatherNameField.text}")
-            println("Номер телефона: ${phoneField.text}")
-            println("Телеграмм: ${telegramField.text}")
-            println("Почта: ${mailField.text}")
-            println("Гит: ${gitField.text}")
             if (id == 0) {
                 createController.addStudent(lastNameField.text,nameField.text,fatherNameField.text,phoneField.text,telegramField.text,mailField.text,gitField.text)
                 readController.refresh_data()
@@ -236,7 +243,9 @@ class View : Application() {
                 updateController.updateStudent(id,lastNameField.text, nameField.text,fatherNameField.text, phoneField.text, telegramField.text, mailField.text, gitField.text)
                 readController.refresh_data()
             }
-            modalStage.close()
+            if(errorLabel.text=="") {
+                modalStage.close()
+            }
         }
         grid.add(submitButton, 1, 8)
         val scene = Scene(grid, 400.0, 300.0)

@@ -16,5 +16,7 @@
     <orderEntry type="library" name="fasterxml.jackson.dataformat.yaml" level="project" />
     <orderEntry type="library" name="postgresql" level="project" />
     <orderEntry type="library" name="openjfx.javafx.controls" level="project" />
+    <orderEntry type="library" name="fitbur.testify.junit.core" level="project" />
+    <orderEntry type="library" name="junit.jupiter" level="project" />
   </component>
 </module>

@@ -38,16 +38,12 @@ class Student : StudentSuper {
         {
             return field
         }
-    @field:JsonProperty("fathername") var fathername: String =""
+    @field:JsonProperty("fathername") var fathername: String? =""
         set(value)
         {
-            if(validateNames(value))
+            if(validateFatherName(value?:""))
             {
                 field=value
-            }
-            else
-            {
-                field=""
             }
         }
         get()
@@ -139,7 +135,10 @@ class Student : StudentSuper {
 
     fun shortName(): String
     {
-        var res=lastname+" "+name[0]+"."+fathername[0]+". "
+        var res=""
+        if(lastname!=null&&lastname!=""){res+=lastname+" "}
+        if(name!=null&&name!=""){res+=name[0]+"."}
+        if(fathername!=null&&fathername!=""){res+= fathername!![0]+"."}
         return res
     }
 

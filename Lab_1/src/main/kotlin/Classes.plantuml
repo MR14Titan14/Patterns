@@ -5,10 +5,6 @@ top to bottom direction
 skinparam linetype ortho
 
 class Companion {
-  + readFromTxt(String): List<Student>
-  + writeToTxt(String, List<Student>): Unit
-}
-class Companion {
   + validateMail(String?): Boolean
   + validateNames(String): Boolean
   + validateGit(String?): Boolean
@@ -16,8 +12,12 @@ class Companion {
   + validateTelegram(String?): Boolean
    ids: Int
 }
+class Companion {
+  + writeToTxt(String, List<Student>): Unit
+  + readFromTxt(String): List<Student>
+}
 class CreateController {
-  + CreateController(View): 
+  + CreateController(View, StudentList): 
   + addStudent(String, String, String, String, String, String, String): Unit
    view: View
 }
@@ -44,7 +44,7 @@ class DataTable {
    columns: Int
 }
 class DeleteController {
-  + DeleteController(View): 
+  + DeleteController(View, StudentList): 
   + deleteStudent(Int): Unit
    view: View
 }
@@ -56,11 +56,11 @@ class MainKt {
   + main(): Unit
 }
 class ReadController {
-  + ReadController(View): 
+  + ReadController(View, StudentList): 
   + refresh_data(): Unit
    view: View
+   currentFilter: List<Boolean>
    currentPage: Int
-   currentFilter: String
 }
 class Student {
   + Student(String, String?, String, String, String, String?, String?, String?): 
@@ -86,45 +86,13 @@ class Student {
    lastname: String
    telegram: String?
 }
-class StudentList {
-  + StudentList(String, View): 
-  + getById(Int): Student?
-  + replaceStudent(Int, Student): Unit
-  + getKNStudentShort(Int, Int, String): DataListStudentShort
-  + deleteStudent(Int): Unit
-  + addStudent(Student): Unit
-  + getKNStudent(Int, Int, String): List<Student>
-   view: View
-   studentShortCount: Int
-}
-class StudentListAdapter {
-  + StudentListAdapter(String, View): 
-  + addStudent(Student): Unit
-  + replaceStudent(Int, Student): Unit
-  + getById(Int): Student?
-  + getKNStudent(Int, Int, String): List<Student>
-  + getKNStudentShort(Int, Int, String): DataListStudentShort
-  + deleteStudent(Int): Unit
-   view: View
-   studentShortCount: Int
-   path: String
-}
-interface StudentListInterface << interface >> {
-  + getById(Int): Student?
-  + replaceStudent(Int, Student): Unit
-  + getKNStudentShort(Int, Int, String): DataListStudentShort
-  + deleteStudent(Int): Unit
-  + addStudent(Student): Unit
-  + getKNStudent(Int, Int, String): List<Student>
-   studentShortCount: Int
-}
 interface StudentListStrategy << interface >> {
   + writeToFile(String): Unit
   + readFromFile(String): Unit
    data: List<Student>
 }
 class StudentManager {
-  + StudentManager(StudentListStrategy): 
+  + StudentManager(StudentListStrategy, View): 
   + readFromFile(String): Unit
   + writeToFile(String): Unit
    strategy: StudentListStrategy
@@ -143,17 +111,21 @@ class StudentSuper {
    id: Int
 }
 class UpdateController {
-  + UpdateController(View): 
+  + UpdateController(View, StudentList): 
   + getStudent(Int): List<String>
   + updateStudent(Int, String, String, String, String, String, String, String): Unit
    view: View
 }
 class View {
   + View(): 
-  + start(Stage): Unit
   + updatePageLabel(String): Unit
+  + start(Stage): Unit
   + updateTables(List<StudentShort>): Unit
   - openModalWindow(Int): Unit
+  + refreshFilters(): Unit
+   source: StudentList
+   path: String
+   filters: List<String>
 }
 class ViewKt {
   + main(): Unit
@@ -163,7 +135,5 @@ Companion             +-[#820000,plain]-  Student
 Companion             +-[#820000,plain]-  StudentSuper         
 DataListStudentShort  -[#000082,plain]-^  DataList             
 Student               -[#000082,plain]-^  StudentSuper         
-StudentList           -[#008200,dashed]-^  StudentListInterface 
-StudentListAdapter    -[#008200,dashed]-^  StudentListInterface 
 StudentShort          -[#000082,plain]-^  StudentSuper         
 @enduml

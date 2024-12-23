@@ -63,9 +63,9 @@ class StudentsListDB private constructor(var view:View):StudentListInterface {
         return null
     }
 
-    override fun getKNStudentShort(k:Int,n:Int, filter: String):DataListStudentShort
+    override fun getKNStudentShort(k:Int,n:Int):DataListStudentShort
     {
-        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        val result = executeQuery("SELECT * FROM student ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
         var sl=mutableListOf<Student>()
         if (result != null) {
@@ -82,9 +82,9 @@ class StudentsListDB private constructor(var view:View):StudentListInterface {
         return DataListStudentShort(ss,view)
     }
 
-    override fun getKNStudent(k:Int,n:Int, filter: String):MutableList<Student>
+    override fun getKNStudent(k:Int,n:Int):MutableList<Student>
     {
-        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        val result = executeQuery("SELECT * FROM student ORDER BY id LIMIT ${n} OFFSET ${k*n};")
         var input = ""
         var sl=mutableListOf<Student>()
         if (result != null) {

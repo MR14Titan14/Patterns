@@ -5,16 +5,21 @@ top to bottom direction
 skinparam linetype ortho
 
 class Companion {
-  + validatePhone(String?): Boolean
-  + validateTelegram(String?): Boolean
-  + validateMail(String?): Boolean
-  + validateGit(String?): Boolean
-  + validateNames(String): Boolean
-   ids: Int
+  + readFromTxt(String): List<Student>
+  + writeToTxt(String, List<Student>): Unit
 }
 class Companion {
-  + writeToTxt(String, List<Student>): Unit
-  + readFromTxt(String): List<Student>
+  + validateMail(String?): Boolean
+  + validateNames(String): Boolean
+  + validateGit(String?): Boolean
+  + validatePhone(String?): Boolean
+  + validateTelegram(String?): Boolean
+   ids: Int
+}
+class CreateController {
+  + CreateController(View): 
+  + addStudent(String, String, String, String, String, String, String): Unit
+   view: View
 }
 class DataList<T> {
   + DataList(List<T>): 
@@ -26,15 +31,36 @@ class DataList<T> {
    selected: List<Int>
 }
 class DataListStudentShort {
-  + DataListStudentShort(List<StudentShort>): 
+  + DataListStudentShort(List<StudentShort>, View): 
+  + notifyView(): Unit
+   view: View
    dataOfRows: List<List<Object>>
    names: String[]
 }
 class DataTable {
   + DataTable(List<List<Object>>): 
   + getElement(Int, Int): Object?
-   columns: Int
    rows: Int
+   columns: Int
+}
+class DeleteController {
+  + DeleteController(View): 
+  + deleteStudent(Int): Unit
+   view: View
+}
+class Main {
+  + Main(): 
+  + main(): Unit
+}
+class MainKt {
+  + main(): Unit
+}
+class ReadController {
+  + ReadController(View): 
+  + refresh_data(): Unit
+   view: View
+   currentPage: Int
+   currentFilter: String
 }
 class Student {
   + Student(String, String?, String, String, String, String?, String?, String?): 
@@ -44,15 +70,15 @@ class Student {
   + Student(HashMap<String, Object>): 
   + Student(String): 
   + Student(String, Int): 
-  + validate(): Boolean
-  - hasContact(): Boolean
   + info(): String
+  + contact(): String
+  - hasContact(): Boolean
+  + toString(): String
+  + setContacts(String?, String?, String?): Unit
   - hasGit(): Boolean
   + toStringRaw(): String
+  + validate(): Boolean
   + shortName(): String
-  + setContacts(String?, String?, String?): Unit
-  + toString(): String
-  + contact(): String
    name: String
    fathername: String
    mail: String?
@@ -61,48 +87,53 @@ class Student {
    telegram: String?
 }
 class StudentList {
-  + StudentList(String): 
+  + StudentList(String, View): 
   + getById(Int): Student?
   + replaceStudent(Int, Student): Unit
-  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + getKNStudentShort(Int, Int, String): DataListStudentShort
   + deleteStudent(Int): Unit
   + addStudent(Student): Unit
+  + getKNStudent(Int, Int, String): List<Student>
+   view: View
    studentShortCount: Int
 }
 class StudentListAdapter {
-  + StudentListAdapter(String): 
-  + getById(Int): Student?
+  + StudentListAdapter(String, View): 
   + addStudent(Student): Unit
-  + getKNStudentShort(Int, Int): DataList<StudentShort>
-  + deleteStudent(Int): Unit
   + replaceStudent(Int, Student): Unit
-   path: String
+  + getById(Int): Student?
+  + getKNStudent(Int, Int, String): List<Student>
+  + getKNStudentShort(Int, Int, String): DataListStudentShort
+  + deleteStudent(Int): Unit
+   view: View
    studentShortCount: Int
+   path: String
 }
 interface StudentListInterface << interface >> {
-  + deleteStudent(Int): Unit
-  + replaceStudent(Int, Student): Unit
   + getById(Int): Student?
+  + replaceStudent(Int, Student): Unit
+  + getKNStudentShort(Int, Int, String): DataListStudentShort
+  + deleteStudent(Int): Unit
   + addStudent(Student): Unit
-  + getKNStudentShort(Int, Int): DataList<StudentShort>
+  + getKNStudent(Int, Int, String): List<Student>
    studentShortCount: Int
 }
 interface StudentListStrategy << interface >> {
-  + readFromFile(String): Unit
   + writeToFile(String): Unit
+  + readFromFile(String): Unit
    data: List<Student>
 }
 class StudentManager {
   + StudentManager(StudentListStrategy): 
-  + writeToFile(String): Unit
   + readFromFile(String): Unit
+  + writeToFile(String): Unit
    strategy: StudentListStrategy
 }
 class StudentShort {
   + StudentShort(Student): 
   + StudentShort(String): 
-  + toStringRaw(): String
   + toString(): String
+  + toStringRaw(): String
    contact: String?
    fio: String?
 }
@@ -110,6 +141,22 @@ class StudentSuper {
   + StudentSuper(): 
    git: String?
    id: Int
+}
+class UpdateController {
+  + UpdateController(View): 
+  + getStudent(Int): List<String>
+  + updateStudent(Int, String, String, String, String, String, String, String): Unit
+   view: View
+}
+class View {
+  + View(): 
+  + start(Stage): Unit
+  + updatePageLabel(String): Unit
+  + updateTables(List<StudentShort>): Unit
+  - openModalWindow(Int): Unit
+}
+class ViewKt {
+  + main(): Unit
 }
 
 Companion             +-[#820000,plain]-  Student              
