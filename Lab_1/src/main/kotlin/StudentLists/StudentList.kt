@@ -71,13 +71,11 @@ class StudentListAdapter(var path: String,var view: View) : StudentListInterface
 class StudentList(path: String, var view: View) : StudentListInterface {
     private var studentList: StudentListInterface? = null
 
-    var isfile=false
     init {
         if (path == "pg") {
             studentList = StudentsListDB.getInstance(view)
         } else {
             studentList = StudentListAdapter(path,view)
-            isfile=true
         }
     }
 
